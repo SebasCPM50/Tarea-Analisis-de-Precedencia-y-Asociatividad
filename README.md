@@ -174,4 +174,4 @@ Mediante pruebas controladas, logramos evidenciar que:
 - Independencia del lenguaje: ANTLR4 permite definir las reglas del lenguaje de forma abstracta en su propio formato (.g4), delegando la ejecución final al entorno de preferencia, en este caso, utilizando antlr4-python3-runtime para ejecutar el código generado 100% en Python.
 
 ## Integrantes
-Alejandro Poveda Sandoval - Juan
+Alejandro Poveda Sandoval - Juan Pablo Bejarano Arévalo - Sebastián Chaux Palencia
