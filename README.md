@@ -1,18 +1,18 @@
 # Taller de Asociatividad y Precedencia con ANTLR4
 
 ## Descripción
-Este taller tiene como propósito comprobar experimentalmente cómo funcionan las reglas de asociatividad y precedencia en el diseño de un lenguaje. Para ello, se utiliza una gramática de calculadora básica construida con ANTLR4. La calculadora es únicamente el medio de comprobación; el objetivo real es observar cómo los cambios en las reglas de la gramática afectan la forma en que se agrupan y evalúan las expresiones. Todo el proyecto se ejecuta utilizando Python.
+Esta tarea tiene como propósito comprobar experimentalmente cómo funcionan las reglas de asociatividad y precedencia en el diseño de un lenguaje. Para ello, se utiliza una gramática de calculadora básica construida con ANTLR4. La calculadora es únicamente el medio de comprobación; el objetivo real es observar cómo los cambios en las reglas de la gramática afectan la forma en que se agrupan y evalúan las expresiones. Toda la tarea se ejecuta utilizando Python.
 
 ## Objetivos
 * Demostrar la asociatividad por la izquierda mediante la estructura predeterminada de la gramática.
 * Demostrar la asociatividad por la derecha modificando las reglas de ANTLR4.
 * Comprobar el cambio en la interpretación de una expresión al alterar la precedencia (prioridad) entre multiplicación/división y suma/resta.
 
-## Estructura del proyecto
+## Estructura de la tarea
 * `Calculadora.g4`: Archivo principal que contiene la gramática (reglas léxicas y sintácticas).
 * `calculadora.py`: Script en Python que toma los archivos generados por ANTLR4, lee la expresión, recorre el árbol y evalúa el resultado matemático.
-* Archivos autogenerados por ANTLR4 (Lexer, Parser, Visitor): Son el puente entre nuestra gramática y el código Python.
-* `README.md`: Documentación y análisis del taller.
+* Archivos autogenerados por ANTLR4 (Lexer, Parser, Visitor)
+* `README.md`: Documentación y análisis de la tarea.
 
 ## Requerimientos
 * ANTLR4 instalado en el sistema (disponible mediante el comando `antlr4`).
@@ -49,11 +49,11 @@ La gramática interpreta esta expresión construyendo el árbol desde el extremo
 
 Representación del árbol generado por el parser:
 ```text
-         Resta (-)  <-- Operación principal (última en resolverse)
+         Resta (-)  Última operación en resolverse
          /       \
-   Resta (-)      2 <-- Lado derecho de la operación principal
+   Resta (-)      2
     /     \
-  10       3 <-- Esta resta está más profunda, se resuelve primero (10 - 3 = 7)
+  10       3 Primer operación en resolverse
 ```
 Como se observa en el árbol, el parser agrupa primero el `10` y el `3`. Python evalúa ese sub-árbol inferior (dando 7) y luego utiliza ese resultado para restarle el `2` del nivel superior, dando el resultado final de `5`.
 
