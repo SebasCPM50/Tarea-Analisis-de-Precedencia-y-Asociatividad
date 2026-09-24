@@ -55,6 +55,7 @@ Representación del árbol generado por el parser:
     /     \
   10       3 Primer operación en resolverse
 ```
+
 Como se observa en el árbol, el parser agrupa primero el `10` y el `3`. Python evalúa ese sub-árbol inferior (dando 7) y luego utiliza ese resultado para restarle el `2` del nivel superior, dando el resultado final de `5`.
 
 **Prueba:**
