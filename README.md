@@ -87,10 +87,42 @@ Esto se refleja en el árbol de análisis sintáctico, donde la operación de la
 
 
 ## Precedencia
-*(Sección en construcción para la siguiente fase...)*
 
-## Pruebas
-*(Sección en construcción para agrupar los resultados...)*
+### Precedencia de multiplicación y división
+
+**Objetivo:** Comprobar que en la gramática, los operadores de multiplicación (`*`) y división (`/`) tienen mayor prioridad (se ejecutan primero) que la suma (`+`) y la resta (`-`).
+
+En ANTLR4, la precedencia se establece **por el orden en que se declaran las alternativas dentro de una regla**. Las reglas que están más arriba tienen mayor prioridad.
+
+Nuestra gramática está estructurada así:
+```antlr
+expr: expr '*' expr                   # Multiplicacion (Mayor prioridad)
+    | expr '/' expr                   # Division
+    | expr '+' expr                   # Suma
+    | <assoc=right> expr '-' expr     # Resta (Menor prioridad)
+    | INT                             # Numero
+    ;
+```
+Expresión analizada: 2 + 3 * 4
+
+Forma en que se agrupa lógicamente: 2 + (3 * 4)
+
+Resultado obtenido: 14
+
+Por qué la gramática produce esta agrupación:
+Al analizar la expresión 2 + 3 * 4, el parser detecta dos operadores compitiendo: + y *. Como la regla de la multiplicación está declarada antes que la regla de la suma en el archivo .g4, ANTLR4 le asigna mayor precedencia.
+
+Por lo tanto, el parser construye el árbol sintáctico agrupando primero el 3 * 4 en un nivel inferior (para que se evalúe primero), y el resultado de eso se suma con el 2 en la raíz del árbol.
+```text
+      + (Raíz. Operación final: 2 + 12 = 14)
+    /   \
+  2      * (Sub-árbol derecho. Se resuelve primero: 3 * 4 = 12)
+        /   \
+       3     4
+```
+**Prueba:**
+<img width="1490" height="617" alt="image" src="https://github.com/user-attachments/assets/7aa807d4-4368-46aa-9c3b-4e5119d915c8" />
+
 
 ## Resultados
 *(Sección en construcción...)*
