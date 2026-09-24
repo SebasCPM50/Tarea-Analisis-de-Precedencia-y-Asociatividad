@@ -34,19 +34,7 @@ pip install antlr4-python3-runtime
    ```bash
    python3 calculadora.py
    ```
-
-## Explicación de la gramática
-En ANTLR4, la gramática se divide en dos partes fundamentales:
-* **Reglas Léxicas:** Se escriben en **MAYÚSCULAS** (ej. `INT`). Definen el vocabulario básico.
-* **Reglas Sintácticas:** Se escriben en **minúsculas** (ej. `expr`). Definen cómo se estructuran y agrupan los elementos del vocabulario para formar expresiones con sentido.
-* **Precedencia:** En el bloque sintáctico, las reglas que se escriben primero (más arriba) tienen mayor prioridad que las que están debajo.
-
-## Análisis léxico
-Es la primera etapa del flujo. El "Lexer" toma el texto plano que escribe el usuario (por ejemplo, `10 - 3`) y lo agrupa en piezas clave llamadas **Tokens**. Ignora los espacios en blanco y reconoce que `10` y `3` son tokens de tipo `INT`, y que `-` es un símbolo de operación.
-
-## Análisis sintáctico
-Es la segunda etapa. El "Parser" recibe los Tokens del Lexer y verifica que cumplan la gramática. Al hacerlo, construye un **Árbol de Análisis Sintáctico**. La forma que tome este árbol es lo que determina en qué orden se resolverán las operaciones (asociatividad y precedencia).
-
+   
 ## Asociatividad
 
 ### Asociatividad por la izquierda
