@@ -57,6 +57,10 @@ Representación del árbol generado por el parser:
 ```
 Como se observa en el árbol, el parser agrupa primero el `10` y el `3`. Python evalúa ese sub-árbol inferior (dando 7) y luego utiliza ese resultado para restarle el `2` del nivel superior, dando el resultado final de `5`.
 
+**Prueba**
+<img width="1497" height="620" alt="image" src="https://github.com/user-attachments/assets/ed40a96a-c130-4cae-a762-24e9f912eca2" />
+
+
 ### Asociatividad por la derecha
 *(Sección en construcción para la siguiente fase...)*
 
