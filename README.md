@@ -109,7 +109,7 @@ Forma en que se agrupa lógicamente: 2 + (3 * 4)
 
 Resultado obtenido: 14
 
-Por qué la gramática produce esta agrupación:
+**Por qué la gramática produce esta agrupación:**
 Al analizar la expresión 2 + 3 * 4, el parser detecta dos operadores compitiendo: + y *. Como la regla de la multiplicación está declarada antes que la regla de la suma en el archivo .g4, ANTLR4 le asigna mayor precedencia.
 
 Por lo tanto, el parser construye el árbol sintáctico agrupando primero el 3 * 4 en un nivel inferior (para que se evalúe primero), y el resultado de eso se suma con el 2 en la raíz del árbol.
@@ -123,9 +123,55 @@ Por lo tanto, el parser construye el árbol sintáctico agrupando primero el 3 *
 **Prueba:**
 <img width="1490" height="617" alt="image" src="https://github.com/user-attachments/assets/7aa807d4-4368-46aa-9c3b-4e5119d915c8" />
 
+Aquí tienes exclusivamente las tres secciones finales para que las agregues a tu README.md:
+
+## Precedencia de suma y resta
+
+**Objetivo:** Demostrar que al alterar el orden de las reglas en la gramática, podemos invertir las reglas matemáticas tradicionales, dándole mayor prioridad a la suma (`+`) y a la resta (`-`) sobre la multiplicación (`*`) y la división (`/`).
+
+Para lograr esto, modificamos el archivo `Calculadora.g4` moviendo las reglas de suma y resta hacia arriba:
+```antlr
+expr: expr '+' expr                   # Suma (Mayor prioridad)
+    | <assoc=right> expr '-' expr     # Resta 
+    | expr '*' expr                   # Multiplicacion (Menor prioridad)
+    | expr '/' expr                   # Division
+    | INT                             # Numero
+    ;
+```
+Expresión analizada: 2 + 3 * 4
+
+Forma en que se agrupa lógicamente: (2 + 3) * 4
+
+Resultado obtenido: 20
+
+**Por qué la gramática produce esta agrupación:**
+Al colocar la suma por encima de la multiplicación en el archivo de la gramática, ANTLR4 le otorga mayor precedencia. El parser lee la expresión y, al encontrar la competencia entre + y *, decide resolver primero la suma.
+
+En el árbol sintáctico, esto se refleja empujando la suma hacia el fondo del árbol (para que se calcule primero) y dejando la multiplicación en la raíz:
+```text
+      * (Raíz. Operación final: 5 * 4 = 20)
+    /   \
+  4      + (Sub-árbol. Se resuelve primero: 2 + 3 = 5)
+        /   \
+       2     3
+```
+
+**Prueba:**
+<img width="1492" height="618" alt="image" src="https://github.com/user-attachments/assets/9de45d83-1f17-4ceb-a864-e7190b060cba" />
 
 ## Resultados
-*(Sección en construcción...)*
+A lo largo de esta tarea, utilizamos la gramática de una calculadora básica no para construir una herramienta funcional, sino como un medio experimental para observar el comportamiento de ANTLR4.
+
+Mediante pruebas controladas, logramos evidenciar que:
+- La asociatividad se maneja por defecto hacia la izquierda, pero puede ser forzada hacia la derecha utilizando comandos específicos como <assoc=right>, lo cual cambia completamente la forma en que se agrupan operadores idénticos.
+- La precedencia de los operadores no está predefinida por las leyes matemáticas, sino por el orden estricto en que se declaran las reglas dentro del archivo .g4. La regla escrita más arriba siempre se resolverá primero en el árbol de análisis sintáctico.
 
 ## Conclusiones
-*(Sección en construcción...)*
+- El control está en la sintaxis: El análisis sintáctico (Parser) es el responsable de darle estructura y jerarquía a una expresión plana generada por el Lexer.
+
+- Semántica mínima: La evaluación en Python (Visitor) se mantuvo estrictamente básica, calculando únicamente los nodos del árbol para poder comprobar matemáticamente que la gramática estaba agrupando los valores en el orden esperado.
+
+- Independencia del lenguaje: ANTLR4 permite definir las reglas del lenguaje de forma abstracta en su propio formato (.g4), delegando la ejecución final al entorno de preferencia, en este caso, utilizando antlr4-python3-runtime para ejecutar el código generado 100% en Python.
+
+## Integrantes
+Alejandro Poveda Sandoval - Juan
