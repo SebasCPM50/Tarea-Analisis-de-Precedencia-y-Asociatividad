@@ -57,12 +57,34 @@ Representación del árbol generado por el parser:
 ```
 Como se observa en el árbol, el parser agrupa primero el `10` y el `3`. Python evalúa ese sub-árbol inferior (dando 7) y luego utiliza ese resultado para restarle el `2` del nivel superior, dando el resultado final de `5`.
 
-**Prueba**
+**Prueba:**
 <img width="1497" height="620" alt="image" src="https://github.com/user-attachments/assets/ed40a96a-c130-4cae-a762-24e9f912eca2" />
 
 
 ### Asociatividad por la derecha
-*(Sección en construcción para la siguiente fase...)*
+**Objetivo:** Demostrar que al modificar la gramática, podemos forzar a que los operadores del mismo tipo se agrupen de derecha a izquierda.
+
+Para lograr esto, modificamos la regla de la resta en nuestro archivo `Calculadora.g4` añadiendo la directiva `<assoc=right>`:
+`| <assoc=right> expr '-' expr     # Resta`
+
+*   **Expresión analizada:** `10 - 3 - 2`
+*   **Forma en que se agrupa lógicamente:** `10 - (3 - 2)`
+*   **Resultado obtenido:** `9`
+
+**Por qué la gramática produce esta agrupación:**
+Al indicar explícitamente `<assoc=right>`, el parser altera su comportamiento predeterminado. Cuando encuentra operadores compitiendo en el mismo nivel jerárquico, prioriza resolver primero el lado derecho. 
+
+Esto se refleja en el árbol de análisis sintáctico, donde la operación de la derecha queda más profunda y, por lo tanto, se resuelve primero:
+
+      - (Raíz. Operación final: 10 - 1 = 9)
+    /   \
+  10      - (Sub-árbol derecho. Se resuelve primero: 3 - 2 = 1)
+        /   \
+       3     2
+
+**Prueba:**
+<img width="1491" height="617" alt="image" src="https://github.com/user-attachments/assets/a9e94a97-be66-4c9a-ad01-2d1b3693d568" />
+
 
 ## Precedencia
 *(Sección en construcción para la siguiente fase...)*
