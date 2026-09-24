@@ -55,7 +55,6 @@ Representación del árbol generado por el parser:
     /     \
   10       3 Primer operación en resolverse
 ```
-
 Como se observa en el árbol, el parser agrupa primero el `10` y el `3`. Python evalúa ese sub-árbol inferior (dando 7) y luego utiliza ese resultado para restarle el `2` del nivel superior, dando el resultado final de `5`.
 
 **Prueba:**
@@ -76,13 +75,13 @@ Para lograr esto, modificamos la regla de la resta en nuestro archivo `Calculado
 Al indicar explícitamente `<assoc=right>`, el parser altera su comportamiento predeterminado. Cuando encuentra operadores compitiendo en el mismo nivel jerárquico, prioriza resolver primero el lado derecho. 
 
 Esto se refleja en el árbol de análisis sintáctico, donde la operación de la derecha queda más profunda y, por lo tanto, se resuelve primero:
-
+```text
       - (Raíz. Operación final: 10 - 1 = 9)
     /   \
   10      - (Sub-árbol derecho. Se resuelve primero: 3 - 2 = 1)
         /   \
        3     2
-
+```
 **Prueba:**
 <img width="1491" height="617" alt="image" src="https://github.com/user-attachments/assets/a9e94a97-be66-4c9a-ad01-2d1b3693d568" />
 
